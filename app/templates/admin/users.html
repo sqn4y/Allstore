@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% block content %}
+<h1>Продавцы</h1>
+<form class="panel" method="post">
+<input name="username" placeholder="Логин" required>
+<input name="password" placeholder="Пароль" required>
+<input name="store_name" placeholder="Название магазина">
+<button class="primary">Создать продавца</button>
+</form>
+<div class="list">
+{% for user in users %}
+<div class="list-item"><div><b>{{ user.username }}</b><small>{{ user.store.name }}</small></div>
+<form method="post" action="{{ url_for('admin.delete_user', user_id=user.id) }}"><button class="danger">Удалить</button></form></div>
+{% else %}<p class="empty">Продавцов пока нет.</p>{% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#6c4bf4">
+<title>{% block title %}Каталог{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <a href="{{ url_for('auth.login') }}" class="brand">Каталог</a>
+  {% if current_user.is_authenticated %}
+    <form method="post" action="{{ url_for('auth.logout') }}"><button class="link-btn">Выйти</button></form>
+  {% endif %}
+</header>
+<main class="container">
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}
+{% endwith %}
+{% block content %}{% endblock %}
+</main>
+</body>
+</html>

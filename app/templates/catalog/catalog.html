@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% block title %}{{ store.name }}{% endblock %}
+{% block content %}
+<div class="catalog-head"><h1>{{ store.name }}</h1><a class="cart-link" href="{{ url_for('cart.view', slug=store.slug) }}">Корзина{% if cart_count %}<span class="cart-badge">{{ cart_count }}</span>{% endif %}</a></div>
+{% for category in store.categories %}
+<section><h2 class="category-title">{{ category.name }}</h2>
+<div class="product-list">
+{% for product in category.products %}
+<article class="product-card">
+{% if product.image_filename %}<img src="{{ product_image_url(product.image_filename) }}">{% endif %}
+<div class="product-body"><a class="product-link" href="{{ url_for('catalog.product', slug=store.slug, product_id=product.id) }}"><h2>{{ product.name }}</h2></a>
+<p>{{ product.short_description }}</p><strong>{{ "%.2f"|format(product.price|float) }}</strong>
+<form method="post" action="{{ url_for('cart.add', slug=store.slug, product_id=product.id) }}"><button class="primary">В корзину</button></form>
+</div></article>
+{% endfor %}</div></section>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block content %}
+<h1>Настройки магазина</h1>
+<form class="panel form" method="post">
+<label>Название магазина<input name="name" value="{{ store.name }}" required></label>
+<label>WhatsApp номер<input name="whatsapp_number" value="{{ store.whatsapp_number }}" placeholder="+49123456789" required></label>
+<button class="primary">Сохранить</button>
+</form>
+{% endblock %}

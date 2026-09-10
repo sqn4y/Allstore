@@ -1,0 +1,26 @@
+{% extends "base.html" %}{% block title %}Продавцы{% endblock %}
+{% block content %}
+<div class="page-head"><h1>Продавцы</h1><a class="button" href="{{ url_for('admin.users') }}">+ Добавить продавца</a></div>
+<div class="seller-list">
+{% for user, product_count, category_count in sellers %}
+<div class="seller-card">
+  <div class="seller-main">
+    <strong>{{ user.store.name }}</strong>
+    <span>@{{ user.username }}</span>
+  </div>
+  <div class="seller-stats">
+    <span><b>{{ category_count }}</b> категорий</span>
+    <span><b>{{ product_count }}</b> товаров</span>
+  </div>
+  <div class="seller-actions">
+    <a class="button" href="{{ url_for('catalog.store', slug=user.store.slug) }}" target="_blank">Каталог</a>
+    <form method="post" action="{{ url_for('admin.delete_user', user_id=user.id) }}" onsubmit="return confirm('Удалить продавца?')">
+      <button class="danger">Удалить</button>
+    </form>
+  </div>
+</div>
+{% else %}
+<p class="empty">Продавцов пока нет.</p>
+{% endfor %}
+</div>
+{% endblock %}

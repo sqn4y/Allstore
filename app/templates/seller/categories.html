@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block content %}
+<div class="page-head"><h1>Категории</h1><a class="button" href="{{ url_for('seller.dashboard') }}">Назад</a></div>
+<form class="panel" method="post"><input name="name" placeholder="Название категории" required><button class="primary">Добавить</button></form>
+<div class="list">{% for category in categories %}
+<div class="list-item"><b>{{ category.name }}</b><form method="post" action="{{ url_for('seller.delete_category', category_id=category.id) }}"><button class="danger">Удалить</button></form></div>
+{% else %}<p class="empty">Категорий пока нет.</p>{% endfor %}</div>
+{% endblock %}

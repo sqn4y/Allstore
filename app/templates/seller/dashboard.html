@@ -1,0 +1,25 @@
+{% extends "base.html" %}{% block content %}
+<h1>{{ store.name }}</h1>
+<div class="grid">
+<a class="tile" href="{{ url_for('seller.categories') }}">Категории</a>
+<a class="tile" href="{{ url_for('seller.products') }}">Товары</a>
+<a class="tile" href="{{ url_for('seller.settings') }}">Настройки</a>
+<a class="tile" href="{{ url_for('catalog.store', slug=store.slug) }}" target="_blank">Открыть каталог</a>
+</div>
+<div class="share">
+<strong>Ссылка каталога</strong>
+<div class="share-row">
+<code id="catalog-link">{{ url_for('catalog.store', slug=store.slug, _external=True) }}</code>
+<button type="button" class="button" onclick="copyCatalogLink()">Копировать</button>
+</div>
+</div>
+<script>
+function copyCatalogLink(){
+  const text=document.getElementById('catalog-link').textContent;
+  navigator.clipboard.writeText(text).then(()=>{
+    const b=document.querySelector('.share-row button'); const old=b.textContent;
+    b.textContent='Скопировано'; setTimeout(()=>b.textContent=old,1200);
+  });
+}
+</script>
+{% endblock %}

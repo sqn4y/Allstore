@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% block content %}
+<div class="page-head"><h1>Товары</h1><a class="button" href="{{ url_for('seller.new_product') }}">+ Товар</a></div>
+<div class="product-list">{% for product in products %}
+<article class="product-card">
+{% if product.image_filename %}<img src="/uploads/products/{{ product.image_filename }}">{% endif %}
+<div class="product-body"><h2>{{ product.name }}</h2><p>{{ product.short_description }}</p><strong>{{ "%.2f"|format(product.price|float) }}</strong>
+<form method="post" action="{{ url_for('seller.delete_product', product_id=product.id) }}"><button class="danger">Удалить</button></form></div>
+</article>
+{% else %}<p class="empty">Товаров пока нет.</p>{% endfor %}</div>
+{% endblock %}

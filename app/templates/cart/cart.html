@@ -1,0 +1,25 @@
+{% extends "base.html" %}{% block content %}
+<div class="page-head"><h1>Корзина{% if cart_count %}<span class="cart-badge">{{ cart_count }}</span>{% endif %}</h1><a class="button" href="{{ url_for('catalog.store', slug=store.slug) }}">Каталог</a></div>
+{% for product, qty, is_selected, subtotal in products %}
+<div class="cart-product {% if is_selected %}selected{% endif %}">
+  <form method="post" action="{{ url_for('cart.select', slug=store.slug, product_id=product.id) }}" class="check-form">
+    <button class="check-btn" aria-label="Выбрать товар">{{ '✓' if is_selected else '' }}</button>
+  </form>
+  <div class="cart-product-info">
+    <b>{{ product.name }}</b>
+    {% if product.short_description %}<small>{{ product.short_description }}</small>{% endif %}
+    <span>{{ "%.2f"|format(product.price|float) }} × {{ qty }} = <b>{{ "%.2f"|format(subtotal) }}</b></span>
+  </div>
+  <div class="qty">
+    <form method="post" action="{{ url_for('cart.update', slug=store.slug, product_id=product.id) }}"><input type="hidden" name="action" value="decrease"><button>−</button></form>
+    <strong>{{ qty }}</strong>
+    <form method="post" action="{{ url_for('cart.update', slug=store.slug, product_id=product.id) }}"><input type="hidden" name="action" value="increase"><button>+</button></form>
+  </div>
+</div>
+{% else %}<p class="empty">Корзина пуста.</p>{% endfor %}
+{% if products %}
+<div class="total">Выбрано: {{ "%.2f"|format(total) }}</div>
+<form method="post" action="{{ url_for('cart.order', slug=store.slug) }}"><button class="primary wide">Заказать выбранное в WhatsApp</button></form>
+<form method="post" action="{{ url_for('cart.clear', slug=store.slug) }}"><button class="button wide">Очистить корзину</button></form>
+{% endif %}
+{% endblock %}
