@@ -1,2 +1,16 @@
+[project]
+name = "allstore"
+version = "0.1.0"
+description = "Allstore Flask catalog"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "Flask>=3.1,<4",
+    "Flask-SQLAlchemy>=3.1,<4",
+    "Flask-WTF>=1.2,<2",
+    "Flask-Login>=0.6,<1",
+    "python-dotenv>=1.0,<2",
+    "Werkzeug>=3.1,<4"
+]
+
 [tool.vercel]
 entrypoint = "run:app"
